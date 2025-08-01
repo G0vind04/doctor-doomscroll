@@ -1,34 +1,36 @@
-let reelCounter = 0;
-let dailyLimit = null;
 let scrollTimeout;
 
-const checkReelsLimit = () => {
-  chrome.storage.local.get(['reelsCount', 'reelsLimit'], (result) => {
-    reelCounter = result.reelsCount || 0;
-    dailyLimit = result.reelsLimit;
-    if (dailyLimit && reelCounter >= dailyLimit) {
-      // Replace the body content to block further viewing
-      document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: red; text-align: center; font-family: sans-serif;">You have reached your daily limit of ${dailyLimit} reels.</div>`;
-    }
-  });
+/**
+ * Replaces the page content with a blocking message.
+ * @param {number} limit - The daily limit that was reached.
+ */
+const blockPage = (limit) => {
+  // Stop listening for scrolls once the page is blocked to prevent errors
+  window.removeEventListener('wheel', handleScroll);
+  document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: red; text-align: center; font-family: sans-serif;">You have reached your daily limit of ${limit} reels.</div>`;
 };
 
+// Listen for messages FROM the background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // The background script will tell us when the limit is reached
+  if (message.type === 'limitReached') {
+    blockPage(message.limit);
+  }
+});
+
+/**
+ * Debounced scroll handler that sends a message to the background script.
+ */
 const handleScroll = () => {
-  // Clear any existing timeout to debounce the scroll event
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
-    chrome.storage.local.get('reelsCount', (result) => {
-      let currentCount = result.reelsCount || 0;
-      currentCount++;
-      chrome.storage.local.set({ reelsCount: currentCount }, () => {
-        checkReelsLimit(); // Check the limit after each increment
-      });
-    });
-  }, 500); // Debounce for 500ms to count a scroll as one reel
+    // Inform the background script that a reel was scrolled
+    chrome.runtime.sendMessage({ type: 'reelScrolled' });
+  }, 500); // Debounce to count a scroll flick as one reel
 };
 
-// Listen for wheel events to detect scrolling
 window.addEventListener('wheel', handleScroll, { passive: true });
 
-// Initial check when the page loads
-checkReelsLimit();
+// On initial load, ask the background script if the limit is already met.
+// This handles cases where you open a new Reels tab after already hitting the limit.
+chrome.runtime.sendMessage({ type: 'checkLimitOnLoad' });

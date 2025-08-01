@@ -5,6 +5,7 @@ let shortsWatched = new Set();
 let timer = 0;
 let shortsLimit = 0;
 let limitCheckIntervalId = null;
+let currentMemePhase = -1;
 
 // Meme image paths (10 steps from inc1.png to inc10.png)
 const memeImages = [
@@ -17,12 +18,25 @@ const memeImages = [
   chrome.runtime.getURL("inc7.png"),
   chrome.runtime.getURL("inc8.png"),
   chrome.runtime.getURL("inc9.png"),
-  chrome.runtime.getURL("inc10.png"),
+  chrome.runtime.getURL("inc10.png")
 ];
 
-// Overlay generator with meme image step
-const createOverlay = (message, shortsCountParam = 1, shortsLimitParam = 10, duration = 1000) => {
-  // Use passed-in shortsCount and shortsLimit for previewing proper meme, else fall back to globals
+// 10 ROAST CAPTIONS – one for each meme phase!
+const memeRoastCaptions = [
+  "You're off to a mediocre start.",
+  "Still scrolling? Productivity is trembling.",
+  "Every Short drops your IQ by 0.5.",
+  "You scroll like your life depends on it. (It doesn't.)",
+  "This is the highlight of your week, isn’t it?",
+  "Your thumb works harder than your ambitions.",
+  "History will forget these Shorts. And you.",
+  "Even YouTube is judging you now.",
+  "They’ll name a procrastination technique after you.",
+  "Legend says you’re still scrolling… in the afterlife."
+];
+
+// Overlay generator with meme image & witty roast - now fade in & fade out together!
+const createOverlay = (message = "", shortsCountParam = 1, shortsLimitParam = 10, duration = 2200) => {
   const currCount = shortsCountParam ?? shortsCount;
   const currLimit = shortsLimitParam ?? shortsLimit;
   const steps = memeImages.length;
@@ -30,6 +44,7 @@ const createOverlay = (message, shortsCountParam = 1, shortsLimitParam = 10, dur
   const stepSize = Math.ceil(validLimit / steps);
   const imgIndex = Math.min(Math.floor((currCount - 1) / stepSize), steps - 1);
 
+  // Create overlay container
   const overlay = document.createElement('div');
   Object.assign(overlay.style, {
     position: 'fixed',
@@ -48,23 +63,41 @@ const createOverlay = (message, shortsCountParam = 1, shortsLimitParam = 10, dur
     pointerEvents: 'none'
   });
 
-  // Meme image
+  // Image fades
   const img = document.createElement('img');
   img.src = memeImages[imgIndex];
   img.style.maxWidth = '300px';
   img.style.height = 'auto';
   img.style.marginBottom = '24px';
   img.style.opacity = '0';
-  img.style.transition = 'opacity 0.7s';
-  setTimeout(() => { img.style.opacity = '1'; }, 50);
+  img.style.transition = 'opacity 0.8s';
 
-  // Message
-  const text = document.createElement('div');
-  text.textContent = message;
+  // Roast fades
+  const roast = document.createElement('div');
+  roast.textContent = memeRoastCaptions[imgIndex];
+  roast.style.fontSize = '1.3rem';
+  roast.style.marginTop = '2px';
+  roast.style.maxWidth = '80vw';
+  roast.style.textAlign = 'center';
+  roast.style.fontStyle = 'italic';
+  roast.style.opacity = '0';
+  roast.style.transition = 'opacity 0.8s';
 
   overlay.appendChild(img);
-  overlay.appendChild(text);
+  overlay.appendChild(roast);
   document.body.appendChild(overlay);
+
+  // Fade in both
+  setTimeout(() => {
+    img.style.opacity = '1';
+    roast.style.opacity = '1';
+  }, 50);
+
+  // Fade out both before removing
+  setTimeout(() => {
+    img.style.opacity = '0';
+    roast.style.opacity = '0';
+  }, duration - 700);
 
   setTimeout(() => {
     overlay.remove();
@@ -84,22 +117,32 @@ chrome.storage.sync.get(["shortsLimit"], (result) => {
 
 const isShorts = (url) => url.includes("/shorts");
 
-// --- Overlay on activation (start at first image) ---
-createOverlay('Reel Counter active', 1, shortsLimit);
+// Overlay on activation (start at first image, you can use a neutral roast)
+createOverlay('', 1, shortsLimit);
 
 const countShorts = () => {
   let currentUrl = window.location.href;
   if (isShorts(currentUrl) && !shortsWatched.has(currentUrl)) {
     shortsWatched.add(currentUrl);
     shortsCount++;
-    // Show meme overlay for current progress
-    createOverlay(`Total shorts watched: ${shortsCount}`, shortsCount, shortsLimit);
+
+    // Only show overlay when entering a new meme phase
+    const steps = memeImages.length;
+    const validLimit = shortsLimit > 0 ? shortsLimit : steps;
+    const stepSize = Math.ceil(validLimit / steps);
+    const newPhase = Math.min(Math.floor((shortsCount - 1) / stepSize), steps - 1);
+
+    if (newPhase !== currentMemePhase) {
+      currentMemePhase = newPhase;
+      createOverlay("", shortsCount, shortsLimit);
+    }
+
     console.log("New short watched", currentUrl);
     console.log("Total shorts watched:", shortsCount);
 
     if (shortsLimit > 0 && shortsCount >= shortsLimit) {
       chrome.runtime.sendMessage({ limitReached: true });
-      createOverlay("Shorts limit reached!", shortsCount, shortsLimit, 3000);
+      createOverlay("Your scrolling has reached legendary status.", shortsCount, shortsLimit, 3000);
     }
   }
 };
@@ -113,7 +156,7 @@ function startLimitCheck() {
     console.log("Starting limit check with limit:", shortsLimit);
     if (shortsCount >= shortsLimit) {
       chrome.runtime.sendMessage({ limitReached: true });
-      createOverlay("Shorts limit reached!", shortsCount, shortsLimit, 3000);
+      createOverlay("Your scrolling has reached legendary status.", shortsCount, shortsLimit, 3000);
     }
   }
 }

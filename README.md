@@ -30,8 +30,7 @@ For Software:
 - Frameworks/Libraries: None (Vanilla JS, Chrome Extensions API)
 - Tools: Chrome Extension Manifest V3, Chrome DevTools
 
-### Implementation
-For Software:
+
 # Installation
 1. Clone/download the repo.
 2. Open Chrome browser and go to chrome://extensions/.
@@ -79,24 +78,7 @@ You’re shown just how much time you've wasted — but in the most ridiculous, 
 ![Workflow](Add your workflow/architecture diagram here)
 *Add caption explaining your workflow*
 
-For Hardware:
 
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ### Project Demo
 # Video
@@ -107,9 +89,8 @@ For Hardware:
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- Aaqil Fazil: [Specific contributions]
-- Govind Mohan: [Specific contributions]
-- 
+- Aaqil Fazil: Designed overall project concept; implemented core content script for tracking Shorts/Reels and overlay logic; managed extension manifest and testing.
+- Govind Mohan: coordinated integration with background and popup scripts.Developed background service worker for tab management and rule enforcement; crafted the lost time report page and humorous absurd time conversion.
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 

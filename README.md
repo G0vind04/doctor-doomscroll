@@ -33,10 +33,15 @@ For Software:
 ### Implementation
 For Software:
 # Installation
-[commands]
+1. Clone/download the repo.
+2. Open Chrome browser and go to chrome://extensions/.
+3. Enable Developer Mode (toggle top-right).
+4. Click Load unpacked and select the extension folder.
 
 # Run
-[commands]
+- Navigate to YouTube Shorts or Instagram Reels pages.
+- Your doomscrolling will be tracked automatically according to the limit you set in the extension popup.
+
 
 ### Project Documentation
 For Software:

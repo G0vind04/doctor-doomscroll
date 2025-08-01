@@ -1,17 +1,81 @@
-<html>
-    <head>
-        <title>Welcome to Dr DoomScroll</title>
-        <style>
-            body{
-                margin: 0;
-                font-family: "Roboto", Arial, sans-serif;
-                font-size: 14px;
-                width: 250px;
-                background-color: #f9f9f9;
-                color: #0f0f0f;
-                border: 1px solid #ddd;
-                box-sizing: border-box;
-            }
-        </style>
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reels Watch Counter</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      width: 250px;
+      padding: 15px;
+      background-color: #f0f2f5;
+    }
+    h1 {
+      font-size: 18px;
+      text-align: center;
+      color: #1d2129;
+    }
+    .data-container {
+      margin: 15px 0;
+    }
+    .data-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .label {
+      font-weight: 600;
+    }
+    .value {
+      font-weight: 400;
+      color: #385898;
+    }
+    .limit-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    input[type="number"] {
+      width: 80%;
+      padding: 8px;
+      border: 1px solid #dddfe2;
+      border-radius: 4px;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #4267B2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 85%;
+    }
+    button:hover {
+      background-color: #365899;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reels Watch Counter</h1>
+  <div class="data-container">
+    <div class="data-item">
+      <span class="label">Reels Scrolled Today:</span>
+      <span id="reels-count" class="value">0</span>
+    </div>
+    <div class="data-item">
+      <span class="label">Time on Reels Today:</span>
+      <span id="time-spent" class="value">0m 0s</span>
+    </div>
+  </div>
+  <div class="limit-container">
+    <label for="limit-input">Set Daily Reel Limit:</label>
+    <input type="number" id="limit-input" placeholder="e.g., 50">
+    <button id="save-limit">Save Limit</button>
+  </div>
+
+  <!-- <script src="popup.js"></script> -->
+</body>
 </html>

@@ -39,5 +39,22 @@
         "path": "rules.json"
       }
     ]
-  }
+  },              
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inc1.png",
+        "inc2.png",
+        "inc3.png",
+        "inc4.png",
+        "inc5.png",
+        "inc6.png",
+        "inc7.png",
+        "inc8.png",
+        "inc9.png",
+        "inc10.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

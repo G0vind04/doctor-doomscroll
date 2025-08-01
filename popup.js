@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const limit = parseInt(limitInputEl.value);
     if (!isNaN(limit) && limit > 0) {
       chrome.storage.local.set({ reelsLimit: limit }, () => {
-        // You can provide user feedback here, like a small message
         alert('Limit saved!');
       });
     }

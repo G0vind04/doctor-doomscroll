@@ -1,10 +1,30 @@
 {
   "name": "dr-doomscroll",
-  "description": "Base Level Extension",
+  "description": "Tracks time spent on Instagram Reels and YouTube Shorts.",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "popup.html",
     "default_icon": "drdoom.png"
-  }
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.instagram.com/",
+    "https://www.youtube.com/"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/reels/*",
+        "https://www.youtube.com/shorts/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
 }

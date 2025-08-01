@@ -15,7 +15,7 @@
 
 
 ### Project Description
-It is a Chrome extension that helps you regain control over your time by tracking your YouTube Shorts consumption. It monitors the number of shorts you scroll and the total time spent, allowing you to set daily limits. Once your limit is reached, it automatically closes the tab, helping you break the cycle of mindless scrolling and improve your focus.
+Dr DoomScroll is the browser extension that cheerfully tracks your infinite doomscroll through YouTube Shorts and Instagram Reels, counting each pointless video and roasting you with meme pop-ups as you spiral further. When you finally hit your totally arbitrary limit, it closes your tab… but, let’s be honest, you’ll probably just open another.
 
 ### The Problem (that doesn't exist)
 We are trying to solve the problem of unintentional, excessive consumption of short-form video content, which leads to a loss of time, focus, and digital well-being.
@@ -26,9 +26,9 @@ Dr DoomScroll tracks your YouTube Shorts and Instagram Reels viewing, counting h
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-Languages: JavaScript, HTML, CSS
-Frameworks/Libraries: None (Vanilla JS, Chrome Extensions API)
-Tools: Chrome Extension Manifest V3, Chrome DevTools
+-Languages: JavaScript, HTML, CSS
+-Frameworks/Libraries: None (Vanilla JS, Chrome Extensions API)
+-Tools: Chrome Extension Manifest V3, Chrome DevTools
 
 ### Implementation
 For Software:

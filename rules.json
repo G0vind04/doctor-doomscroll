@@ -1,0 +1,12 @@
+[
+    {
+      "id": 1,
+      "priority": 1,
+      "action": { "type": "block" },
+      "condition": {
+        "urlFilter": "||youtube.com/shorts/",
+        "resourceTypes": ["main_frame"]
+      }
+    }
+  ]
+  

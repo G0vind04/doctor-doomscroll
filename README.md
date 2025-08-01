@@ -46,15 +46,34 @@ For Software:
 ### Project Documentation
 For Software:
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+## 📸 Screenshots
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+### 🎯 Real-Time Scroll Tracker
+<img width="388" height="492" alt="Screenshot 2025-08-02 041954" src="https://github.com/user-attachments/assets/4727e2c7-9199-4e18-b1ed-d68d3bbb9252" />
+Displays real-time tracking of the number of Shorts/Reels the user has watched during the session, along with a neatly formatted session timer.
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+---
+
+### 😅 Humor-Packed Popups
+<img width="1276" height="983" alt="Screenshot 2025-08-02 042650" src="https://github.com/user-attachments/assets/c5681b65-f7ab-46a7-8c4c-6c8b298a17bf" />
+A witty meme-based popup (starring Mr. Incredible) appears after excessive scrolling, nudging the user to reflect on their habits.
+
+---
+
+### 🫣 Increasingly Uncanny Feedback
+<img width="1229" height="881" alt="Screenshot 2025-08-02 042658" src="https://github.com/user-attachments/assets/72601cca-9a1c-4f62-a605-050246bbc0f7" />
+Mr. Incredible becomes more uncanny the deeper you fall into the doom-scroll abyss!
+
+---
+
+<img width="1380" height="926" alt="Screenshot 2025-08-02 041845" src="https://github.com/user-attachments/assets/27c2737a-5f27-466a-943c-9f43451608cf" />
+
+---
+
+### 🤯 Absurd & Funny Time Units
+<img width="1702" height="911" alt="Screenshot 2025-08-02 041919" src="https://github.com/user-attachments/assets/d71258cf-de1c-4d78-94c7-a3460530b1ad" />
+You’re shown just how much time you've wasted — but in the most ridiculous, laugh-out-loud units imaginable.
+
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)

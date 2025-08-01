@@ -21,7 +21,7 @@ It is a Chrome extension that helps you regain control over your time by trackin
 We are trying to solve the problem of unintentional, excessive consumption of short-form video content, which leads to a loss of time, focus, and digital well-being.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+Dr DoomScroll tracks your YouTube Shorts and Instagram Reels viewing, counting how many you watch and timing your scrolling. As you reach milestones, it overlays escalating Mr. Incredible memes with witty roasts mocking your doomscrolling habit. Once you hit your set limit, it blocks access and closes tabs to make you face the consequences.
 
 ## Technical Details
 ### Technologies/Components Used

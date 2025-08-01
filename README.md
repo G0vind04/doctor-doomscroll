@@ -2,7 +2,7 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# Doctor Doomscroll
 
 
 ## Basic Details
@@ -15,10 +15,10 @@
 
 
 ### Project Description
-[2-3 lines about what your project does]
+It is a Chrome extension that helps you regain control over your time by tracking your YouTube Shorts consumption. It monitors the number of shorts you scroll and the total time spent, allowing you to set daily limits. Once your limit is reached, it automatically closes the tab, helping you break the cycle of mindless scrolling and improve your focus.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+We are trying to solve the problem of unintentional, excessive consumption of short-form video content, which leads to a loss of time, focus, and digital well-being.
 
 ### The Solution (that nobody asked for)
 [How are you solving it? Keep it fun!]

@@ -26,15 +26,9 @@ Dr DoomScroll tracks your YouTube Shorts and Instagram Reels viewing, counting h
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
-
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+Languages: JavaScript, HTML, CSS
+Frameworks/Libraries: None (Vanilla JS, Chrome Extensions API)
+Tools: Chrome Extension Manifest V3, Chrome DevTools
 
 ### Implementation
 For Software:

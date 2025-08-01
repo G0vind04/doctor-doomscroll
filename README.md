@@ -2,7 +2,7 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# Doctor Doomscroll
 
 
 ## Basic Details
@@ -15,26 +15,20 @@
 
 
 ### Project Description
-[2-3 lines about what your project does]
+Dr DoomScroll is the browser extension that cheerfully tracks your infinite doomscroll through YouTube Shorts and Instagram Reels, counting each pointless video and roasting you with meme pop-ups as you spiral further. When you finally hit your totally arbitrary limit, it closes your tab… but, let’s be honest, you’ll probably just open another.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+We are trying to solve the problem of unintentional, excessive consumption of short-form video content, which leads to a loss of time, focus, and digital well-being.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+Dr DoomScroll tracks your YouTube Shorts and Instagram Reels viewing, counting how many you watch and timing your scrolling. As you reach milestones, it overlays escalating Mr. Incredible memes with witty roasts mocking your doomscrolling habit. Once you hit your set limit, it blocks access and closes tabs to make you face the consequences.
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
-
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+- Languages: JavaScript, HTML, CSS
+- Frameworks/Libraries: None (Vanilla JS, Chrome Extensions API)
+- Tools: Chrome Extension Manifest V3, Chrome DevTools
 
 ### Implementation
 For Software:

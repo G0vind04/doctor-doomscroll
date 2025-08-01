@@ -8,7 +8,8 @@
       "js": ["content.js"],
       "matches": [
         "https://youtube.com/shorts/*",
-        "*://*.youtube.com/*"
+        "*://*.youtube.com/*",
+        "https://www.instagram.com/reels/*"
       ]
     }
   ],

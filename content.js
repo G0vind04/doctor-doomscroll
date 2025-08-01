@@ -35,7 +35,12 @@ const memeRoastCaptions = [
   "Legend says you’re still scrolling… in the afterlife."
 ];
 
-// Overlay generator with meme image & witty roast - now fade in & fade out together!
+// General detector for YouTube Shorts and Instagram Reels URLs
+const isShortFormVideo = url =>
+  url.includes("/shorts") ||
+  url.includes("/reel/");  // covers both Youtube shorts and Instagram reels
+
+// Overlay generator with synced fade in & out for image and roast caption
 const createOverlay = (message = "", shortsCountParam = 1, shortsLimitParam = 10, duration = 2200) => {
   const currCount = shortsCountParam ?? shortsCount;
   const currLimit = shortsLimitParam ?? shortsLimit;
@@ -63,16 +68,16 @@ const createOverlay = (message = "", shortsCountParam = 1, shortsLimitParam = 10
     pointerEvents: 'none'
   });
 
-  // Image fades
+  // Meme image, fade CSS
   const img = document.createElement('img');
   img.src = memeImages[imgIndex];
   img.style.maxWidth = '300px';
   img.style.height = 'auto';
   img.style.marginBottom = '24px';
   img.style.opacity = '0';
-  img.style.transition = 'opacity 0.8s';
+  img.style.transition = 'opacity 1s';
 
-  // Roast fades
+  // Roast caption, fade CSS
   const roast = document.createElement('div');
   roast.textContent = memeRoastCaptions[imgIndex];
   roast.style.fontSize = '1.3rem';
@@ -81,23 +86,23 @@ const createOverlay = (message = "", shortsCountParam = 1, shortsLimitParam = 10
   roast.style.textAlign = 'center';
   roast.style.fontStyle = 'italic';
   roast.style.opacity = '0';
-  roast.style.transition = 'opacity 0.8s';
+  roast.style.transition = 'opacity 1s';
 
   overlay.appendChild(img);
   overlay.appendChild(roast);
   document.body.appendChild(overlay);
 
-  // Fade in both
+  // Fade-in both image and roast caption
   setTimeout(() => {
     img.style.opacity = '1';
     roast.style.opacity = '1';
-  }, 50);
+  }, 60);
 
-  // Fade out both before removing
+  // Fade-out both before removing overlay
   setTimeout(() => {
     img.style.opacity = '0';
     roast.style.opacity = '0';
-  }, duration - 700);
+  }, duration - 1000);
 
   setTimeout(() => {
     overlay.remove();
@@ -115,18 +120,16 @@ chrome.storage.sync.get(["shortsLimit"], (result) => {
   }
 });
 
-const isShorts = (url) => url.includes("/shorts");
-
-// Overlay on activation (start at first image, you can use a neutral roast)
+// Overlay on activation (start at first image with neutral roast)
 createOverlay('', 1, shortsLimit);
 
 const countShorts = () => {
   let currentUrl = window.location.href;
-  if (isShorts(currentUrl) && !shortsWatched.has(currentUrl)) {
+  if (isShortFormVideo(currentUrl) && !shortsWatched.has(currentUrl)) {
     shortsWatched.add(currentUrl);
     shortsCount++;
 
-    // Only show overlay when entering a new meme phase
+    // Show overlay only when meme phase changes
     const steps = memeImages.length;
     const validLimit = shortsLimit > 0 ? shortsLimit : steps;
     const stepSize = Math.ceil(validLimit / steps);
@@ -137,8 +140,8 @@ const countShorts = () => {
       createOverlay("", shortsCount, shortsLimit);
     }
 
-    console.log("New short watched", currentUrl);
-    console.log("Total shorts watched:", shortsCount);
+    console.log("New short/reel watched", currentUrl);
+    console.log("Total shorts/reels watched:", shortsCount);
 
     if (shortsLimit > 0 && shortsCount >= shortsLimit) {
       chrome.runtime.sendMessage({ limitReached: true });
@@ -167,27 +170,30 @@ window.addEventListener('popstate', countShorts);
 window.addEventListener('hashchange', countShorts);
 
 let previousUrl = window.location.href;
+// Check for navigation changes every second
 setInterval(() => {
-  let currentUrl = window.location.href;
+  const currentUrl = window.location.href;
   if (currentUrl !== previousUrl) {
     previousUrl = currentUrl;
     countShorts();
   }
 }, 1000);
 
+// Increment timer only if on Shorts or Reels page
 setInterval(() => {
-  timer++;
-  console.log(timer);
+  if (isShortFormVideo(window.location.href)) {
+    timer++;
+    console.log(timer);
+  }
 }, 1000);
 
+// Listen to messages from popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "GET_SHORTS_COUNT") {
     sendResponse({ count: shortsCount });
-  }
-  else if (message.type === "GET_TIMER") {
+  } else if (message.type === "GET_TIMER") {
     sendResponse({ timer: timer });
-  }
-  else if (message.type === "START_LIMIT_CHECK") {
+  } else if (message.type === "START_LIMIT_CHECK") {
     shortsLimit = parseInt(message.shortsLimit);
     console.log("Received new shorts limit:", shortsLimit);
     startLimitCheck();

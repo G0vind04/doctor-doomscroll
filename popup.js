@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tabs.length > 0 && tabs[0].url) {
       const url = tabs[0].url;
       const onYouTube = url.includes("youtube.com");
-      const onIGReel = url.includes("instagram.com/reel");
+      const onIGReel = url.includes("instagram.com/reels");
 
       if (onYouTube || onIGReel) {
         const activeTabId = tabs[0].id;

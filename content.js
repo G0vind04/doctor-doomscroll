@@ -1,70 +1,111 @@
-// --- UNIFIED COUNTER FUNCTION ---
-// By putting the message sending in one function, we ensure it's always the same.
-function incrementCounter() {
-  // This console log will help you debug. You can see it in the browser's developer console (F12).
-  console.log('Dr. Doomscroll: Sending reelScrolled message to background.');
-  chrome.runtime.sendMessage({ type: 'reelScrolled' });
-}
+console.log("The shorts counter is running");
 
+let shortsCount = 0;
+let shortsWatched = new Set();
+let timer = 0;
+let shortsLimit = 0;
+let limitCheckIntervalId = null;
 
-// --- BLOCKING LOGIC ---
-const blockPage = (limit) => {
-  // Stop listening for events to prevent errors after the page is blocked.
-  if (window.location.hostname.includes('instagram.com')) {
-    window.removeEventListener('wheel', handleScroll);
-  }
-  document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: red; text-align: center; font-family: sans-serif;">You have reached your daily limit of ${limit} scrolls.</div>`;
-};
-
-// Listen for messages FROM the background script (e.g., to block the page)
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === 'limitReached') {
-    blockPage(message.limit);
+chrome.storage.sync.get(["shortsLimit"], (result) => {
+  if (result.shortsLimit !== undefined) {
+    shortsLimit = parseInt(result.shortsLimit);
+    console.log("Loaded shorts limit:", shortsLimit);
+    startLimitCheck();
   }
 });
 
+const isShorts = (url) => url.includes("/shorts");
 
-// --- SITE-SPECIFIC LOGIC ---
+const createOverlay = (message, duration = 1000) => {
+  const overlay = document.createElement('div');
+  Object.assign(overlay.style, {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 999999,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    fontSize: '2rem',
+    pointerEvents: 'none'
+  });
+  overlay.textContent = message;
+  document.body.appendChild(overlay);
+  setTimeout(() => {
+    overlay.remove();
+  }, duration);
+  return overlay;
+};
 
-// LOGIC FOR YOUTUBE SHORTS: Monitor URL changes
-if (window.location.hostname.includes('youtube.com')) {
+createOverlay('Reel Counter active');
+
+const countShorts = () => {
   let currentUrl = window.location.href;
 
-  setInterval(() => {
-    if (window.location.href !== currentUrl) {
-      currentUrl = window.location.href;
-      // On every URL change, increment the counter.
-      incrementCounter();
+  if (isShorts(currentUrl) && !shortsWatched.has(currentUrl)) {
+    shortsWatched.add(currentUrl);
+    shortsCount++;
+    createOverlay(`Total shorts watched: ${shortsCount}`);
+    console.log("New short watched", currentUrl);
+    console.log("Total shorts watched:", shortsCount);
+    
+    if (shortsLimit > 0 && shortsCount >= shortsLimit) {
+      chrome.runtime.sendMessage({ limitReached: true });
+      createOverlay("Shorts limit reached!", 3000);
     }
-  }, 500); // Check for a new URL every half-second
-}
+  }
+};
 
-// LOGIC FOR INSTAGRAM REELS: Listen for scroll wheel events
-if (window.location.hostname.includes('instagram.com')) {
-  let scrollTimeout;
-  const handleScroll = () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      // After a scroll is detected, increment the counter.
-      incrementCounter();
-    }, 500); // Debounce to count one scroll flick as a single reel
-  };
-  window.addEventListener('wheel', handleScroll, { passive: true });
-}
-
-
-// --- INITIALIZATION LOGIC ---
-
-// This function runs as soon as the content script is injected into the page.
-function initialize() {
-  console.log('Dr. Doomscroll: Content script loaded. Checking limit and counting first view.');
+function startLimitCheck() {
+  if (limitCheckIntervalId) {
+    clearInterval(limitCheckIntervalId);
+    limitCheckIntervalId = null;
+  }
   
-  // 1. Check if the limit has already been met from a previous session.
-  chrome.runtime.sendMessage({ type: 'checkLimitOnLoad' });
-
-  // 2. IMPORTANT FIX: Count the very first Reel/Short that the user sees.
-  // The listeners above will only handle the *next* ones.
-  incrementCounter();
+  if (shortsLimit > 0) {
+    console.log("Starting limit check with limit:", shortsLimit);
+    if (shortsCount >= shortsLimit) {
+      chrome.runtime.sendMessage({ limitReached: true });
+      createOverlay("Shorts limit reached!", 3000);
+    }
+  }
 }
 
-initialize();
+countShorts();
+
+window.addEventListener('popstate', countShorts);
+window.addEventListener('hashchange', countShorts);
+
+let previousUrl = window.location.href;
+setInterval(() => {
+  let currentUrl = window.location.href;
+  if (currentUrl !== previousUrl) {
+    previousUrl = currentUrl;
+    countShorts();
+  }
+}, 1000);
+
+setInterval(() => {
+  timer++;
+  console.log(timer);
+}, 1000);
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "GET_SHORTS_COUNT") {
+    sendResponse({ count: shortsCount });
+  }
+  else if (message.type === "GET_TIMER") {
+    sendResponse({ timer: timer });
+  }
+  else if (message.type === "START_LIMIT_CHECK") {
+    shortsLimit = parseInt(message.shortsLimit);
+    console.log("Received new shorts limit:", shortsLimit);
+    startLimitCheck();
+  }
+
+  return true;
+});

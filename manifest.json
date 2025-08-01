@@ -1,30 +1,43 @@
 {
-  "name": "dr-doomscroll",
-  "description": "Tracks time spent on Instagram Reels and YouTube Shorts.",
+  "name": "Reels Counter",
+  "description": "An extension to count the number of shorts/reels scrolled",
   "version": "1.0",
   "manifest_version": 3,
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": "drdoom.png"
-  },
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
-  "host_permissions": [
-    "https://www.instagram.com/",
-    "https://www.youtube.com/"
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "matches": [
+        "https://youtube.com/shorts/*",
+        "*://*.youtube.com/*"
+      ]
+    }
   ],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://www.instagram.com/reels/*",
-        "https://www.youtube.com/shorts/*"
-      ],
-      "js": ["content.js"]
-    }
-  ]
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "extension.png"
+  },
+  "permissions": [
+    "activeTab", 
+    "webNavigation", 
+    "scripting", 
+    "storage", 
+    "tabs",
+    "declarativeNetRequest",
+    "notifications"
+  ],
+  "host_permissions": [
+
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "blockShortsRules",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
 }

@@ -9,6 +9,7 @@
       "matches": [
         "https://youtube.com/shorts/*",
         "*://*.youtube.com/*",
+        "https://www.instagram.com/reel/*",
         "https://www.instagram.com/reels/*"
       ]
     }
@@ -21,17 +22,15 @@
     "default_icon": "extension1.png"
   },
   "permissions": [
-    "activeTab", 
-    "webNavigation", 
-    "scripting", 
-    "storage", 
+    "activeTab",
+    "webNavigation",
+    "scripting",
+    "storage",
     "tabs",
     "declarativeNetRequest",
     "notifications"
   ],
-  "host_permissions": [
-
-  ],
+  "host_permissions": [],
   "declarative_net_request": {
     "rule_resources": [
       {
@@ -40,7 +39,7 @@
         "path": "rules.json"
       }
     ]
-  },              
+  },
   "web_accessible_resources": [
     {
       "resources": [

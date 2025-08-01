@@ -1,26 +1,18 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.limitReached) {
-      console.log("Shorts limit reached. Activating blocking rule...");
-  
-      // Enable the rule
-      chrome.declarativeNetRequest.updateEnabledRulesets(
-        {
-          enableRulesetIds: ["blockShortsRules"]
-        },
-        () => {
-          console.log("Shorts blocking rule enabled.");
-        }
-      );
-  
-      // Close any Shorts tab
-      chrome.tabs.query({}, (tabs) => {
-        for (let tab of tabs) {
-          if (tab.url && tab.url.includes("youtube.com/shorts/")) {
-            console.log("Closing Shorts tab:", tab.url);
-            chrome.tabs.remove(tab.id);
-          }
-        }
-      });
+  if (message.limitReached && message.timeSpent !== undefined) {
+    const timeInSeconds = message.timeSpent;
+
+    // Open new tab to lost_time.html with the time parameter
+    chrome.tabs.create({
+      url: chrome.runtime.getURL(`lost_time.html?time=${timeInSeconds}`)
+    });
+
+    // Optionally close the original Shorts/Reels tab to stop browsing
+    if (sender.tab && sender.tab.url &&
+        (sender.tab.url.includes("youtube.com/shorts") ||
+         sender.tab.url.includes("instagram.com/reel") ||
+         sender.tab.url.includes("instagram.com/reels"))) {
+      chrome.tabs.remove(sender.tab.id);
     }
-  });
-  
+  }
+});

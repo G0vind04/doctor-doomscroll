@@ -1,216 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Dr DoomScroll Stats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --background-color: #1a1a2e;
+            --primary-color: #0f3460;
+            --secondary-color: #e94560;
+            --font-color: #dcdcdc;
+            --glow-color: #00ffc3;
         }
 
         body {
-            width: 320px;
-            min-height: 400px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #00ff88;
-            font-family: 'Orbitron', monospace;
-            position: relative;
-            overflow: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(46, 125, 50, 0.1) 0%, transparent 50%);
-            pointer-events: none;
+            font-family: 'VT323', monospace;
+            background-color: var(--background-color);
+            color: var(--font-color);
+            width: 280px;
+            padding: 15px;
+            margin: 0;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.4);
         }
 
         h1 {
-            background: linear-gradient(45deg, #00ff88, #4caf50, #2e7d32);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 24px;
-            font-weight: 900;
+            color: var(--secondary-color);
             text-align: center;
-            padding: 20px 15px;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
+            font-size: 36px;
+            margin: 0 0 15px 0;
+            text-shadow: 0 0 5px var(--secondary-color), 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: flicker 1.5s infinite alternate;
         }
 
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ff88, transparent);
-            box-shadow: 0 0 10px #00ff88;
+        @keyframes flicker {
+          0%, 18%, 22%, 25%, 53%, 57%, 100% {
+              text-shadow:
+              0 0 4px var(--secondary-color), 0 0 11px var(--secondary-color),
+              0 0 19px var(--secondary-color), 0 0 40px #e94560;
+          }
+          20%, 24%, 55% { text-shadow: none; }
         }
 
         .data-display {
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .data-display p {
-            margin: 15px 0;
-            font-size: 16px;
-            font-weight: 400;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.2);
+            background-color: rgba(15, 52, 96, 0.5);
+            border: 1px solid var(--primary-color);
             border-radius: 8px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        .data-display p:hover {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: rgba(0, 255, 136, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
-        }
-
-        .data-display span {
-            color: #4caf50;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #00ff88, transparent);
-            margin: 20px 15px;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
-        }
-
-        .limit-setter {
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .limit-setter label {
-            display: block;
-            margin-bottom: 15px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #00ff88;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+        .data-display p { margin: 8px 0; font-size: 20px; letter-spacing: 1px; }
+        .data-display span { color: var(--glow-color); font-weight: bold; font-size: 24px; padding: 0 5px; text-shadow: 0 0 5px var(--glow-color); }
+        hr { border: none; height: 1px; background-color: var(--primary-color); margin: 20px 0; }
+        .limit-setter label { display: block; margin-bottom: 10px; font-size: 22px; color: var(--secondary-color); }
+        .input-group { display: flex; justify-content: center; align-items: center; }
 
         #shorts-limit {
-            flex: 1;
-            padding: 12px;
-            background: rgba(0, 255, 136, 0.05);
-            border: 2px solid rgba(0, 255, 136, 0.2);
-            border-radius: 8px;
-            color: #00ff88;
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            font-family: 'VT323', monospace; background-color: #16213e; border: 1px solid var(--primary-color);
+            color: var(--font-color); padding: 8px; font-size: 18px; width: 100px; text-align: center;
+            border-radius: 5px 0 0 5px; outline: none; transition: box-shadow 0.3s;
         }
-
-        #shorts-limit:focus {
-            outline: none;
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-        }
-
-        #shorts-limit::placeholder {
-            color: rgba(0, 255, 136, 0.5);
-        }
+        #shorts-limit:focus { box-shadow: 0 0 10px var(--glow-color); border-color: var(--glow-color); }
+        #shorts-limit::placeholder { color: rgba(220, 220, 220, 0.5); }
 
         #save-limit {
-            padding: 12px 24px;
-            background: linear-gradient(45deg, #2e7d32, #4caf50);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-left: 8px;
+            font-family: 'VT323', monospace; background-color: var(--secondary-color); border: 1px solid var(--secondary-color);
+            color: var(--background-color); padding: 8px 16px; font-size: 18px; cursor: pointer;
+            border-radius: 0 5px 5px 0; transition: all 0.3s ease; font-weight: bold;
+        }
+        #save-limit:hover { background-color: var(--background-color); color: var(--secondary-color); box-shadow: 0 0 15px var(--secondary-color); }
+        
+        /* Styles for the Results and Clear buttons */
+        .results-link, .clear-button-container { margin-top: 15px; text-align: center; }
+        
+        .styled-button {
+            font-family: 'VT323', monospace; background-color: transparent; padding: 10px 15px;
+            font-size: 16px; cursor: pointer; width: 100%; border-radius: 5px; transition: all 0.3s ease;
         }
 
-        #save-limit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+        #see-results-btn {
+            border: 1px solid var(--glow-color);
+            color: var(--glow-color);
         }
+        #see-results-btn:hover { background-color: var(--glow-color); color: var(--background-color); box-shadow: 0 0 10px var(--glow-color); }
+        
+        /* NEW STYLES FOR THE CLEAR BUTTON */
+        #clear-counter {
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        #clear-counter:hover { background-color: var(--secondary-color); color: var(--font-color); box-shadow: 0 0 10px var(--secondary-color); }
 
-        #save-limit:hover {
-            background: linear-gradient(45deg, #4caf50, #66bb6a);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
-
-        #save-limit:hover::before {
-            left: 100%;
-        }
-
-        #save-limit:active {
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
-    <h1>Dr DoomScroll</h1>
+    <h1>Dr. DoomScroll</h1>
+    
     <div class="data-display">
-        <p>Shorts/Reels Watched: <span id="shorts-count">Loading...</span></p>
-        <p>Time Spent: <span id="timer">Loading...</span></p>
+        <p>Shorts Watched: <span id="shorts-count">0</span></p>
+        <p>Time Wasted: <span id="timer">0s</span></p>
     </div>
-    <hr />
+    
+    <hr>
+    
     <div class="limit-setter">
-        <label for="shorts-limit">Set Watch Limit:</label>
+        <label for="shorts-limit">Set Scroll Limit</label>
         <div class="input-group">
-            <input type="number" id="shorts-limit" min="1" placeholder="No limit" />
-            <button id="save-limit">Save</button>
+            <input type="number" id="shorts-limit" min="1" placeholder="??">
+            <button id="save-limit">SAVE</button>
         </div>
     </div>
+
+    <div class="results-link">
+        <button id="see-results-btn" class="styled-button">See My Wasted Time Stats</button>
+    </div>
+
+    <!-- =========== NEW BUTTON TO ADD =========== -->
+    <div class="clear-button-container">
+        <button id="clear-counter" class="styled-button">Clear All Data</button>
+    </div>
+    <!-- ======================================= -->
+    
     <script src="popup.js"></script>
 </body>
 </html>

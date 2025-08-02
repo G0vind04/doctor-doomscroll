@@ -86,7 +86,7 @@ You’re shown just how much time you've wasted — but in the most ridiculous, 
 *Explain what the video demonstrates*
 
 # Additional Demos
-[Add any extra demo materials/links]
+Pitch PowerPoint Presentation  link - https://docs.google.com/presentation/d/1BfeMyiGshDCSm4ody2oSzA_4ZTc-VbCW/edit?usp=sharing&ouid=101747280837806372895&rtpof=true&sd=true
 
 ## Team Contributions
 - Aaqil Fazil: Designed overall project concept; implemented core content script for tracking Shorts/Reels and overlay logic; managed extension manifest and testing.

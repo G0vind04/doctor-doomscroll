@@ -26,13 +26,13 @@ chrome.storage.sync.get(['timer'], (result) => {
 
   // Define absurd time units in seconds
   const absurdUnits = [
-    { name: "Banana Ripening Cycles", seconds: 5 * 24 * 3600 },
-    { name: "Chicken Nugget Microwave Sessions", seconds: 30 },
+    { name: "Instagram Story Viewings", seconds: 6 },,
+    { name: "Microwave Popcorn Pops", seconds: 0.7 },
     { name: "Full \"Baby Shark\" Songs Played", seconds: 136 },
     { name: "Netflix \"Are You Still Watching\" Popups", seconds: 3 * 3600 },
     { name: "Washing Machine Spin Cycles", seconds: 2700 },
     { name: "Legendary Fortnite Dances", seconds: 5 },
-    { name: "Times you could have blinked", seconds: 0.3 }
+    { name: "Times you could have blinked", seconds: 5 }
   ];
 
   // Calculate and format absurd equivalents

@@ -75,8 +75,20 @@ You’re shown just how much time you've wasted — but in the most ridiculous, 
 
 
 # Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
+
+Content script activation: Injects into YouTube Shorts and Instagram Reels, tracking every video you watch and measuring your total scroll time.
+
+Roasting as you go: Meme overlays and witty captions appear at milestones to keep things entertaining.
+
+User-defined limit: Set via the extension popup and stored in extension storage.
+
+Limit enforcement: When your limit is hit, the content script notifies the background script with your wasted time.
+
+Automatic intervention: The background script enables blocking, closes the doomscrolling tab, and opens a new summary tab.
+
+Absurd time summary: The summary page hilariously shows your wasted time in units like “banana ripening cycles”.
+
+Restart anytime: The popup lets you reset counters and restart the cycle for endless, useless fun.*
 
 
 

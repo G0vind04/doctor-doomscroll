@@ -94,11 +94,12 @@ Restart anytime: The popup lets you reset counters and restart the cycle for end
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+Youtube Project Demo Link -https://www.youtube.com/watch?v=w4lmFxQMGWs
+Explains the working of the project 
 
 # Additional Demos
 Pitch PowerPoint Presentation  link - https://docs.google.com/presentation/d/1BfeMyiGshDCSm4ody2oSzA_4ZTc-VbCW/edit?usp=sharing&ouid=101747280837806372895&rtpof=true&sd=true
+
 
 ## Team Contributions
 - Aaqil Fazil: Designed overall project concept; implemented core content script for tracking Shorts/Reels and overlay logic; managed extension manifest and testing.
